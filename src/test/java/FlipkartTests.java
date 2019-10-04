@@ -4,9 +4,12 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -15,26 +18,34 @@ public class FlipkartTests extends TestCases implements Resources{
 
     static WebDriver driver;
 
+
     @BeforeAll
     public static void createDriver(){
-        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+        WebDriverManager.chromedriver().setup();
+
         driver.get("https://www.flipkart.com");
     }
 
     @Test
     protected void loginFunctionality() {
-        WebElement loginID = driver.findElement(By.xpath(popUpUserID));
-        loginID.sendKeys(userIdValue);
+        WebDriverWait wait = new WebDriverWait(driver,15);
+        WebElement popUp = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(popUpWindow)));
+         try {
+            if (popUp.isDisplayed()) {
+                WebElement loginID = driver.findElement(By.xpath(popUpUserID));
+                loginID.sendKeys(userIdValue);
 
-        WebElement pwd=driver.findElement(By.xpath(popUpPassword));
-        pwd.sendKeys(pwdValue);
+                WebElement pwd = driver.findElement(By.xpath(popUpPassword));
+                pwd.sendKeys(pwdValue);
 
-
-
-
-
-
+                WebElement submit = driver.findElement(By.xpath(popUpLoginButton));
+                submit.click();
+            }
+        }catch(ElementNotVisibleException e)
+        {
+            System.out.println("Different Element is present");
+        }
 
 
     }
