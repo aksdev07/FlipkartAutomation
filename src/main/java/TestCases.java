@@ -1,6 +1,7 @@
+import java.io.IOException;
 
 abstract public class TestCases {
-    protected abstract void loginFunctionality();
+    protected abstract void loginFunctionality() throws IOException;
 
 
     protected  abstract void searchItemFunctionality();

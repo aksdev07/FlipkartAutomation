@@ -10,14 +10,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import com.first.framework.Util;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class FlipkartTests extends TestCases implements Resources{
 
     static WebDriver driver;
-
+    static Util ref =new Util();
 
     @BeforeAll
     public static void createDriver(){
@@ -28,13 +30,13 @@ public class FlipkartTests extends TestCases implements Resources{
     }
 
     @Test
-    protected void loginFunctionality() {
+    protected void loginFunctionality() throws IOException {
         WebDriverWait wait = new WebDriverWait(driver,15);
         WebElement popUp = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(popUpWindow)));
          try {
             if (popUp.isDisplayed()) {
                 WebElement loginID = driver.findElement(By.xpath(popUpUserID));
-                loginID.sendKeys(userIdValue);
+                loginID.sendKeys(ref.getUserIdValue());
 
                 WebElement pwd = driver.findElement(By.xpath(popUpPassword));
                 pwd.sendKeys(pwdValue);
