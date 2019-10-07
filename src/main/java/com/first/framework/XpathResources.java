@@ -1,4 +1,6 @@
-public interface Resources {
+package com.first.framework;
+
+public interface XpathResources {
 
     String popUpUserID = "//input[@class='_2zrpKA _1dBPDZ']";
     String popUpPassword = "//input[@class='_2zrpKA _3v41xv _1dBPDZ']";
