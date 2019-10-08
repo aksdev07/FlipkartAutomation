@@ -4,9 +4,9 @@ abstract public class TestCases {
     protected abstract void loginFunctionality() throws IOException;
 
 
-    protected  abstract void searchItemFunctionality();
+    protected  abstract void searchItemFunctionality() throws InterruptedException;
 
-    protected abstract void itemSelectionFunctionality();
+    protected abstract void itemSelectionFunctionality() throws InterruptedException, IOException;
 
 
     protected abstract void purchaseFunctionality();

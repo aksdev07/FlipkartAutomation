@@ -14,8 +14,9 @@ import java.util.Properties;
 public class ConfigResource {
     private String result = "";
     private InputStream inputStream;
+    private static int c=0;
 
-    public String initializerOFProperty(String configKeyName) throws IOException {
+    private String initializerOFProperty(String configKeyName) throws IOException {
         try {
             Properties prop = new Properties();
             String propFileName = "config.properties";
@@ -27,10 +28,9 @@ public class ConfigResource {
             }
             Date time = new Date(System.currentTimeMillis());
             // get the property value and print it out
-            String keysValue = prop.getProperty(configKeyName);
 
-            result = keysValue;
-            System.out.println(result + " of user " + keysValue);
+            result = prop.getProperty(configKeyName);
+            System.out.println(result + " from config.properties" );
         } catch (Exception e) {
             System.out.println("Exception: " + e);
         } finally {
@@ -59,5 +59,11 @@ public class ConfigResource {
     public String getUrlValue() throws IOException {
 
         return initializerOFProperty("URL");
+    }
+
+    public String getTshirtName() throws IOException{
+        System.out.println(c);
+        c++;
+        return initializerOFProperty("tshirtname");
     }
 }
