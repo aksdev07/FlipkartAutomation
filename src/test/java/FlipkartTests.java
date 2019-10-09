@@ -67,11 +67,9 @@ public class FlipkartTests extends TestCases implements XpathResources {
                 System.out.println("Size of the webelement : " + tShirt.size());
                 for (WebElement s : tShirt) {
                     if (s.getText().contentEquals(ref.getTshirtName())) {
-
                         s.click();
                         c++;
                         break;
-
                     }
                 }
 
