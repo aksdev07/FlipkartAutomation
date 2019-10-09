@@ -17,8 +17,9 @@ public class FlipkartTests extends TestCases implements XpathResources {
 
  @Test(priority = 1)
     public static void createDriver() throws IOException {
-        driver = new ChromeDriver();
+
         WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
         driver.get(ref.getUrlValue());
     }
     @Test(priority = 2)
@@ -91,6 +92,7 @@ public class FlipkartTests extends TestCases implements XpathResources {
 
     @Test(priority =5 )
     protected void purchaseFunctionality() {
+        System.out.println("Will write later");
 
     }
 
