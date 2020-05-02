@@ -11,8 +11,8 @@ public interface XpathResources {
     String tshirtAll="//div[@class='_1HmYoV _35HD7C']//div[contains(@data-id,'TSH')]//a";
 
 
-    String userIdValue= "7004777629";
-    String pwdValue="Super@123";
+    String userIdValue= "userid";
+    String pwdValue="password";
 
     String tShirtName="Striped Men Round Neck White T-Shirt";
 
