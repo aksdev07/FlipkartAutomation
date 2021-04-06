@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="MavenAutomatedFlipkart" />
         <module name="FlipkartAutomationPageFactory" />
+        <module name="AutomatedFlipkart" />
       </profile>
     </annotationProcessing>
   </component>

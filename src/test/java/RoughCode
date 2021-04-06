@@ -16,25 +16,21 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.io.IOException;
-import java.util.Set;
 import java.util.logging.Logger;
 
-public class FlipkartTests extends ConfigResource implements XpathResources {
+public class FlipkartTests extends TestCases implements XpathResources {
     private static Logger logger = Logger.getLogger(FlipkartTests.class.getName());
     private static WebDriver driver;
     private static ConfigResource ref = new ConfigResource();
     private static int c = 0;
     private WebDriverWait wait;
 
-
     @BeforeTest
     public void createDriver() throws IOException {
-        FlipkartTests obj = new FlipkartTests();
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get(obj.getUrlValue());
-        //driver.get();
+        driver.get(ref.getUrlValue());
         logger.fine("Driver instantiated Successfully");
         wait = new WebDriverWait(driver, 15);
         WebElement popUp = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(popUpUserID)));
@@ -42,61 +38,77 @@ public class FlipkartTests extends ConfigResource implements XpathResources {
     }
 
     @BeforeClass
-    public void loginFunctionality() {
+    protected void loginFunctionality() throws IOException {
+
         try {
             WebElement loginID = driver.findElement(By.xpath(popUpUserID));
             loginID.sendKeys(ref.getUserId());
+
             WebElement pwd = driver.findElement(By.xpath(popUpPassword));
             pwd.sendKeys(ref.getPasswordValue());
+
             WebElement submit = driver.findElement(By.xpath(popUpLoginButton));
             submit.click();
             wait.until(ExpectedConditions.invisibilityOf(submit));
+
+            // wait.until(driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete"));
+
+               /* otp
+                WebElement reqOtp = driver.findElement(By.xpath(requestOtp));
+                reqOtp.click();*/
+
+        /*      List<WebElement> value= wait.until(ExpectedConditions.visibilityOfAllElements(driver.findElements(By.xpath(otpPos))));
+                List<WebElement> value = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(otpPos)));
+                logger.info();("a " + value.get(6));
+                popUp.=wait.until(ExpectedConditions.visibilityOfElementLocated(value.get(6).getText().contains("required")))
+                if (!value.get(6).getText().contains("required")) {
+                    //click verify
+                }*/
         } catch (ElementNotVisibleException e) {
             logger.info("Different Element is present");
-        } catch (IOException e) {
-            e.printStackTrace();
         } finally {
-            Assert.assertTrue(driver.findElement(By.xpath(search)).isDisplayed());
+            Assert.assertTrue(driver.findElement(By.xpath(searchField)).isDisplayed());
         }
+
+
     }
 
 
     @Test(priority = 1)
-    public void searchItemFunctionality() {
+    protected void searchItemFunctionality() throws InterruptedException {
+        // driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        //  Thread.sleep(1000);
         SoftAssert softAssert = new SoftAssert();
-        WebElement searchField = driver.findElement(By.xpath(search));
-        searchField.sendKeys(ref.getProductName());
-        WebElement product = driver.findElement(productXpath);
-        softAssert.assertTrue(product.isDisplayed());
-        searchField.submit();
+        WebElement searchFeild = driver.findElement(By.xpath(searchField));
+        searchFeild.sendKeys("T-shirt");
+        softAssert.assertTrue(driver.findElement(By.xpath("//input[@value='T-shirt']")).isDisplayed());
+        // Thread.sleep(1000);
+        searchFeild.submit();
+        //   WebElement enter = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@value='T-shirt']")));
+        // enter.sendKeys(Keys.ENTER);
+        //  searchFeild.sendKeys(Keys.ENTER);
+//        WebElement search = driver.findElement(By.xpath(searchClick));
+//        search.click();
+        // search.sendKeys(Keys.ENTER);
         softAssert.assertAll();
     }
 
 
     @Test(priority = 2)
-    public void itemSelectionFunctionality() {
+    protected void itemSelectionFunctionality() throws InterruptedException, IOException {
+        //  new FlipkartTests().handleMultipleTshirt(driver, logger, ref);
         WebElement shirt = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(oneTshirt)));
         shirt.click();
-        String Parent = driver.getWindowHandle();
-        Set<String> winHandle = driver.getWindowHandles();
-        for (String s : winHandle) {
-            if (!s.equals(Parent))
-            driver.switchTo().window(s);
-            logger.info(s);
-        }
-       wait.until(ExpectedConditions.invisibilityOf(shirt));
     }
 
 
     // @Test(priority = 3)
-    public void purchaseFunctionality() {
+    protected void purchaseFunctionality() {
         logger.info("Will write later");
     }
 
     @AfterClass
     public static void tearDown() {
-
         driver.quit();
     }
-
 }

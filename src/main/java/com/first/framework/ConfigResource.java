@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 /**
  * @author github.com/aksdev07    (Anuj)
@@ -12,11 +13,12 @@ import java.util.Properties;
  */
 
 public class ConfigResource {
+    private static Logger logger = Logger.getLogger(ConfigResource.class.getName());
     private String result = "";
     private InputStream inputStream;
     private static int c=0;
 
-    private String initializerOFProperty(String configKeyName) throws IOException {
+    private String initializerOFProperty(String configKeyName)  {
         try {
             Properties prop = new Properties();
             String propFileName = "config.properties";
@@ -35,7 +37,11 @@ public class ConfigResource {
             System.out.println("Exception: " + e);
         } finally {
             assert inputStream != null;
-            inputStream.close();
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return result;
 
@@ -50,7 +56,7 @@ public class ConfigResource {
     }
 
 
-    public String getPasswordValue() throws IOException {
+    public   String getPasswordValue() throws IOException {
 
         return initializerOFProperty("password");
     }
@@ -59,6 +65,10 @@ public class ConfigResource {
     public String getUrlValue() throws IOException {
 
         return initializerOFProperty("URL");
+    }
+
+    public String getProductName(){
+        return initializerOFProperty("product");
     }
 
     public String getTshirtName() throws IOException{
