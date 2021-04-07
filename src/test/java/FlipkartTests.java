@@ -20,21 +20,24 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 public class FlipkartTests extends ConfigResource implements XpathResources {
-    private static Logger logger = Logger.getLogger(FlipkartTests.class.getName());
+    private static Logger logger;
     private static WebDriver driver;
-    private static ConfigResource ref = new ConfigResource();
-    private static int c = 0;
+    private static ConfigResource ref;
     private WebDriverWait wait;
+
+    public FlipkartTests() {
+        logger = Logger.getLogger(FlipkartTests.class.getName());
+        ref = new ConfigResource();
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+    }
 
 
     @BeforeTest
     public void createDriver() throws IOException {
         FlipkartTests obj = new FlipkartTests();
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
         driver.get(obj.getUrlValue());
-        //driver.get();
         logger.fine("Driver instantiated Successfully");
         wait = new WebDriverWait(driver, 15);
         WebElement popUp = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(popUpUserID)));
@@ -81,16 +84,22 @@ public class FlipkartTests extends ConfigResource implements XpathResources {
         Set<String> winHandle = driver.getWindowHandles();
         for (String s : winHandle) {
             if (!s.equals(Parent))
-            driver.switchTo().window(s);
+                driver.switchTo().window(s);
             logger.info(s);
         }
-       wait.until(ExpectedConditions.invisibilityOf(shirt));
+        wait.until(ExpectedConditions.invisibilityOf(shirt));
     }
 
 
     // @Test(priority = 3)
     public void purchaseFunctionality() {
         logger.info("Will write later");
+    }
+
+    @Override
+    @Test(priority = 1)
+    public void enterPin() {
+        logger.info("PIN is 824512");
     }
 
     @AfterClass

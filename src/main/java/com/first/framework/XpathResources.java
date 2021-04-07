@@ -33,10 +33,12 @@ public interface XpathResources {
     String tShirtName = "Striped Men Round Neck White T-Shirt";
 
 
-
+  String msgField="//div[@data-tab='6']";
+  String send="//span[@data-icon='send']";
   //===================== Test Cases =====================
     void loginFunctionality();
     void searchItemFunctionality();
     void itemSelectionFunctionality();
     void purchaseFunctionality();
+    void enterPin();
 }
