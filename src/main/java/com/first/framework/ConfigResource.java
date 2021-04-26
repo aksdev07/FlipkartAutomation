@@ -9,16 +9,15 @@ import java.util.logging.Logger;
 
 /**
  * @author github.com/aksdev07    (Anuj)
- *
  */
 
 public class ConfigResource {
     private static Logger logger = Logger.getLogger(ConfigResource.class.getName());
     private String result = "";
     private InputStream inputStream;
-    private static int c=0;
+    private static int c = 0;
 
-    private String initializerOFProperty(String configKeyName)  {
+    private String initializerOFProperty(String configKeyName) {
         try {
             Properties prop = new Properties();
             String propFileName = "config.properties";
@@ -32,7 +31,7 @@ public class ConfigResource {
             // get the property value and print it out
 
             result = prop.getProperty(configKeyName);
-            System.out.println(result + " from config.properties" );
+            System.out.println(result + " from config.properties");
         } catch (Exception e) {
             System.out.println("Exception: " + e);
         } finally {
@@ -56,7 +55,7 @@ public class ConfigResource {
     }
 
 
-    public   String getPasswordValue() throws IOException {
+    public String getPasswordValue() throws IOException {
 
         return initializerOFProperty("password");
     }
@@ -67,13 +66,23 @@ public class ConfigResource {
         return initializerOFProperty("URL");
     }
 
-    public String getProductName(){
+    public String getProductName() {
         return initializerOFProperty("product");
     }
 
-    public String getTshirtName() throws IOException{
+    public String getTshirtName() throws IOException {
         System.out.println(c);
         c++;
         return initializerOFProperty("tshirtname");
+    }
+
+    public String getBrowserName() {
+        String s="";
+        try {
+            s= initializerOFProperty("browser");
+        } catch (Exception e) {
+
+        }
+        return s;
     }
 }
