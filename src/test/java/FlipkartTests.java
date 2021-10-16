@@ -1,4 +1,4 @@
-import com.first.framework.ConfigResource;
+import com.first.framework.BaseTest;
 import com.first.framework.XpathResources;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
@@ -20,34 +20,16 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.logging.Logger;
 
-public class FlipkartTests extends ConfigResource implements XpathResources {
+public class FlipkartTests extends BaseTest implements XpathResources {
     private static Logger logger;
-    private static WebDriver driver;
-    private static ConfigResource ref;
-    private WebDriverWait wait;
 
-    public FlipkartTests() {
-        logger = Logger.getLogger(FlipkartTests.class.getName());
-        ref = new ConfigResource();
-        if(getBrowserName().equals("chrome")) {
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
-        }else if(getBrowserName().equals("firefox")){
-            WebDriverManager.firefoxdriver().setup();
-            driver=new FirefoxDriver();
-        }
-        driver.manage().window().maximize();
+    public FlipkartTests() throws IOException {
     }
 
 
     @BeforeTest
     public void createDriver() throws IOException {
-        FlipkartTests obj = new FlipkartTests();
-        driver.get(obj.getUrlValue());
-        logger.fine("Driver instantiated Successfully");
-        wait = new WebDriverWait(driver, 15);
-        WebElement popUp = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(popUpUserID)));
-        Assert.assertTrue(popUp.isDisplayed(), "Worked");
+
     }
 
     @BeforeClass
@@ -71,7 +53,8 @@ public class FlipkartTests extends ConfigResource implements XpathResources {
 
 
     @Test(priority = 1)
-    public void searchItemFunctionality() {
+    public void searchItemFunctionality() throws IOException {
+        FlipkartTests k=new FlipkartTests();
         SoftAssert softAssert = new SoftAssert();
         WebElement searchField = driver.findElement(By.xpath(search));
         searchField.sendKeys(ref.getProductName());

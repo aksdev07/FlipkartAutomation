@@ -1,4 +1,4 @@
-import com.first.framework.ConfigResource;
+import com.first.framework.BaseTest;
 import com.first.framework.XpathResources;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;

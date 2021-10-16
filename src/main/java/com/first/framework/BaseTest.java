@@ -1,5 +1,14 @@
 package com.first.framework;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,16 +16,41 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+import static com.first.framework.XpathResources.popUpUserID;
+
 /**
  * @author github.com/aksdev07    (Anuj)
  */
 
-public class ConfigResource {
-    private static Logger logger = Logger.getLogger(ConfigResource.class.getName());
+public class BaseTest {
+    private static Logger logger = Logger.getLogger(BaseTest.class.getName());
     private String result = "";
     private InputStream inputStream;
     private static int c = 0;
+    public static BaseTest ref;
+    public static WebDriver driver;
+    public WebDriverWait wait;
+    public BaseTest(String init){
 
+    }
+    public BaseTest() throws IOException {
+        logger = Logger.getLogger(BaseTest.class.getName());
+        ref = new BaseTest();
+        if(getBrowserName().equals("chrome")) {
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+        }else if(getBrowserName().equals("firefox")){
+            WebDriverManager.firefoxdriver().setup();
+            driver=new FirefoxDriver();
+        }
+        driver.manage().window().maximize();
+        BaseTest obj = new BaseTest();
+        driver.get(obj.getUrlValue());
+        logger.fine("Driver instantiated Successfully");
+        wait = new WebDriverWait(driver, 15);
+        WebElement popUp = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(popUpUserID)));
+      //  Assert.assertTrue(popUp.isDisplayed(), "Worked");
+    }
     private String initializerOFProperty(String configKeyName) {
         try {
             Properties prop = new Properties();
