@@ -6,9 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="MavenAutomatedFlipkart" />
         <module name="FlipkartAutomationPageFactory" />
         <module name="AutomatedFlipkart" />
+        <module name="MavenAutomatedFlipkart" />
+        <module name="FlipkartAutomation" />
       </profile>
     </annotationProcessing>
   </component>

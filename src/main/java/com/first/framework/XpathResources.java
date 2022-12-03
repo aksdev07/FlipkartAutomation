@@ -2,14 +2,10 @@ package com.first.framework;
 
 import org.openqa.selenium.By;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.Properties;
 
 public interface XpathResources {
-    ConfigResource obj=new ConfigResource();
+    BaseTest obj=new BaseTest("a");
     String tshirtName = "'Solid Men Mandarin Collar Blue, Maroon T-Shirt'";
     String productString=obj.getProductName();
     //=====================  FLIPKART SECTION ===================================
@@ -37,7 +33,7 @@ public interface XpathResources {
   String send="//span[@data-icon='send']";
   //===================== Test Cases =====================
     void loginFunctionality();
-    void searchItemFunctionality();
+    void searchItemFunctionality() throws IOException;
     void itemSelectionFunctionality();
     void purchaseFunctionality();
     void enterPin();
